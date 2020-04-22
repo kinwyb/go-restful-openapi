@@ -8,8 +8,8 @@ require (
 	github.com/go-openapi/jsonreference v0.0.0-20180322222742-3fb327e6747d // indirect
 	github.com/go-openapi/spec v0.0.0-20180415031709-bcff419492ee
 	github.com/go-openapi/swag v0.0.0-20180405201759-811b1089cde9 // indirect
+	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/mailru/easyjson v0.0.0-20180323154445-8b799c424f57 // indirect
-	github.com/stretchr/testify v1.3.0 // indirect
 	golang.org/x/net v0.0.0-20180530234432-1e491301e022 // indirect
 	golang.org/x/text v0.3.0 // indirect
 	gopkg.in/yaml.v2 v2.2.1 // indirect

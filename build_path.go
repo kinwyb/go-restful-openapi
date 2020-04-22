@@ -83,6 +83,8 @@ func buildOperation(ws *restful.WebService, r restful.Route, patterns map[string
 		if tags, ok := r.Metadata[KeyOpenAPITags]; ok {
 			if tagList, ok := tags.([]string); ok {
 				o.Tags = tagList
+			} else if tag, ok := tags.(string); ok {
+				o.Tags = []string{tag}
 			}
 		}
 	}
@@ -210,7 +212,15 @@ func buildResponse(e restful.ResponseError, cfg Config) (r spec.Response) {
 			if isPrimitiveType(modelName) {
 				// If the response is a primitive type, then don't reference any definitions.
 				// Instead, set the schema's "type" to the model name.
-				r.Schema.AddType(modelName, "")
+				switch modelName {
+				case "bool":
+					r.Schema.AddType("boolean", "")
+				case "uint", "uint8", "uint16", "uint32", "uint64",
+					"int", "int8", "int16", "int32", "int64", "float32", "float64":
+					r.Schema.AddType("integer", modelName)
+				default:
+					r.Schema.AddType(modelName, "")
+				}
 			} else {
 				modelName := keyFrom(st, cfg)
 				r.Schema.Ref = spec.MustCreateRef("#/definitions/" + modelName)
@@ -248,11 +258,11 @@ func jsonSchemaType(modelName string) string {
 		"int32": "integer",
 		"int64": "integer",
 
-		"byte":      "integer",
-		"float64":   "number",
-		"float32":   "number",
-		"bool":      "boolean",
-		"time.Time": "string",
+		"byte":          "integer",
+		"float64":       "number",
+		"float32":       "number",
+		"bool":          "boolean",
+		"time.Time":     "string",
 		"time.Duration": "integer",
 	}
 	mapped, ok := schemaMap[modelName]

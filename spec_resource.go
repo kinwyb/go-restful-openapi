@@ -3,6 +3,7 @@ package restfulspec
 import (
 	restful "github.com/emicklei/go-restful"
 	"github.com/go-openapi/spec"
+	"strings"
 )
 
 // NewOpenAPIService returns a new WebService that provides the API documentation of all services
@@ -37,6 +38,9 @@ func BuildSwagger(config Config) *spec.Swagger {
 					item = buildPathItem(each, r, existingPathItem, patterns, config)
 				}
 			}
+			if config.BasePath != "" && config.BasePath != "/" {
+				path = strings.TrimLeft(path, config.BasePath)
+			}
 			paths.Paths[path] = item
 		}
 		for name, def := range buildDefinitions(each, config) {
@@ -49,6 +53,8 @@ func BuildSwagger(config Config) *spec.Swagger {
 			Swagger:     "2.0",
 			Paths:       paths,
 			Definitions: definitions,
+			Schemes:     config.Schemes,
+			BasePath:    config.BasePath,
 		},
 	}
 	if config.PostBuildSwaggerObjectHandler != nil {

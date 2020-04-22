@@ -24,6 +24,10 @@ type PostBuildSwaggerObjectFunc func(s *spec.Swagger)
 type Config struct {
 	// [optional] If set then set this field with the generated Swagger Object
 	Host string
+	// the scheme, when present must be from [http, https, ws, wss]
+	Schemes []string
+	// must start with a leading "/"
+	BasePath string
 	// WebServicesURL is a DEPRECATED field; it never had any effect in this package.
 	WebServicesURL string
 	// APIPath is the path where the JSON api is avaiable , e.g. /apidocs.json
