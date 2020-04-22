@@ -38,8 +38,11 @@ func BuildSwagger(config Config) *spec.Swagger {
 					item = buildPathItem(each, r, existingPathItem, patterns, config)
 				}
 			}
-			if config.BasePath != "" && config.BasePath != "/" {
+			if config.BasePath != "" {
 				path = strings.TrimLeft(path, config.BasePath)
+				if !strings.HasPrefix(path, "/") {
+					path = "/" + path
+				}
 			}
 			paths.Paths[path] = item
 		}
