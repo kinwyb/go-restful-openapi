@@ -1,1 +1,6 @@
 examples/examples
+.idea/.gitignore
+.idea/go-restful-openapi.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
