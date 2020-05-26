@@ -39,7 +39,7 @@ func BuildSwagger(config Config) *spec.Swagger {
 				}
 			}
 			if config.BasePath != "" {
-				path = strings.TrimLeft(path, config.BasePath)
+				path = strings.TrimPrefix(path, config.BasePath)
 				if !strings.HasPrefix(path, "/") {
 					path = "/" + path
 				}
